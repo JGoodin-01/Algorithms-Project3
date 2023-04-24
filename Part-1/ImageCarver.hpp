@@ -13,11 +13,14 @@
 class ImageCarver {
 public:
     ImageCarver(std::string filename);
+    void carve(int horizontalLines, int verticalLines);
+    void displayVector();
+    void printImage();
 
 private:
+    std::string fileName;
     std::vector<std::vector<int>> image;
-    // int imageWidth; // columns
-    // int imageHeight; // rows
+    int imageWidth, imageHeight, horizontalCarves, verticalCarves;
 };
 
 #endif

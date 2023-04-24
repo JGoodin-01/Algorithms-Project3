@@ -9,6 +9,7 @@
 
 int main()
 {
-    std::cout << "RUN\n";
     ImageCarver carverClass("bug.pgm");
+    carverClass.carve(10, 0);
+    carverClass.printImage();
 }
