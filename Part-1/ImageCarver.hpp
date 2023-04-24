@@ -5,6 +5,7 @@
 */
 
 #include <string>
+#include <vector>
 
 #ifndef INCLUDED_IMAGECARVERCLASS_HPP
 #define INCLUDED_IMAGECARVERCLASS_HPP
@@ -14,9 +15,9 @@ public:
     ImageCarver(std::string filename);
 
 private:
-    int imageWidth; // columns
-    int imageHeight; // rows
-    bool isColor;
+    std::vector<std::vector<int>> image;
+    // int imageWidth; // columns
+    // int imageHeight; // rows
 };
 
 #endif
