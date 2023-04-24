@@ -11,7 +11,7 @@
 
 class ImageCarver {
 public:
-    ImageCarver();
+    ImageCarver(std::string filename);
 
 private:
     int imageWidth; // columns
