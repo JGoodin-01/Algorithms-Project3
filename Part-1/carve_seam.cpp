@@ -11,5 +11,5 @@ int main()
 {
     ImageCarver carverClass("bug.pgm");
     carverClass.carve(10, 0);
-    carverClass.printImage();
+    // carverClass.printImage();
 }
