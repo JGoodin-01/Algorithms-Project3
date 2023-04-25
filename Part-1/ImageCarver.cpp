@@ -10,6 +10,7 @@
 #include <iterator>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 ImageCarver::ImageCarver(std::string filename) : horizontalCarves(0), verticalCarves(0)
 {
@@ -49,24 +50,32 @@ ImageCarver::ImageCarver(std::string filename) : horizontalCarves(0), verticalCa
     }
 }
 
-void ImageCarver::carve(int horizontalLines, int verticalLines)
+void ImageCarver::carve(int verticalLines, int horizontalLines)
 {
+    if (horizontalLines >= imageWidth - verticalCarves || verticalLines >= imageHeight - horizontalCarves)
+    {
+        std::cerr << "Amount of carves would remove the image!" << std::endl;
+        exit(1);
+    }
+
     int combinedCutLines = horizontalLines + verticalLines;
     horizontalCarves += horizontalLines;
     verticalCarves += verticalLines;
 
-    
-    std::vector<std::vector<int>> imageEnergy;
+    std::vector<std::vector<int>> imageEnergy, cumulativeVEnergy;
     findImageEnergy(imageEnergy);
 
-    // Output Image Contents
-    for (const auto &row : imageEnergy)
+    // Remove vertical carves
+    for (int i = 0; i < verticalLines; ++i)
     {
-        for (int element : row)
+        findVCumulativeImageEnergy(imageEnergy, cumulativeVEnergy);
+        for (int j = 0; j < image.size(); ++j)
         {
-            std::cout << element << " ";
+            auto it = std::minmax_element(cumulativeVEnergy[j].begin(), cumulativeVEnergy[j].end());
+            int min_idx = std::distance(cumulativeVEnergy[j].begin(), it.first) - 1;
+
+            image[j].erase(image[j].begin() + min_idx);
         }
-        std::cout << std::endl;
     }
 }
 
@@ -114,7 +123,7 @@ int ImageCarver::energyValue(int left, int top, int right, int bottom, int base)
     return abs(base - left) + abs(base - top) + abs(base - right) + abs(base - bottom);
 }
 
-void ImageCarver::findImageEnergy(std::vector<std::vector<int>>& energyVector)
+void ImageCarver::findImageEnergy(std::vector<std::vector<int>> &energyVector)
 {
     int value;
     for (int i = 0; i < image.size(); ++i)
@@ -143,5 +152,43 @@ void ImageCarver::findImageEnergy(std::vector<std::vector<int>>& energyVector)
             row.push_back(value);
         }
         energyVector.push_back(row);
+    }
+}
+
+void ImageCarver::findVCumulativeImageEnergy(std::vector<std::vector<int>> &energyVector, std::vector<std::vector<int>> &cumulativeEnergyVector)
+{
+    for (int i = 0; i < energyVector.size(); ++i)
+    {
+        int value;
+        std::vector<int> row;
+        row.push_back(999999999);
+        for (int j = 0; j < energyVector[i].size(); ++j)
+        {
+            if (i == 0)
+            {
+                value = energyVector[i][j];
+            }
+            else
+            {
+                int first = cumulativeEnergyVector[i - 1][j];
+                int second = cumulativeEnergyVector[i - 1][j + 1];
+                int third = cumulativeEnergyVector[i - 1][j + 2];
+                if (i > 0)
+                    value = energyVector[i][j] + std::min( std::min(first, second), third);
+            }
+
+            row.push_back(value);
+        }
+        row.push_back(999999999);
+        cumulativeEnergyVector.push_back(row);
+    }
+
+    for (const auto &row : cumulativeEnergyVector)
+    {
+        for (int num : row)
+        {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
     }
 }
