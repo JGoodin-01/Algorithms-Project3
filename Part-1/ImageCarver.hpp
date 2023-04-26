@@ -12,22 +12,40 @@
 
 class ImageCarver
 {
-public:
-    ImageCarver(std::string filename);
-    ~ImageCarver() = default;
-
-    void carve(int verticalLines, int horizontalLines);
-    void displayVector();
-    void printImage();
-
 private:
-    std::string fileName;
-    std::vector<std::vector<int>> image;
-    int imageWidth, imageHeight, horizontalCarves, verticalCarves;
+    struct pgmData
+    {
+        std::string version;
+        std::string comment;
+        int columns;
+        int rows;
+        int maxGrayLevel;
+    };
 
-    int energyValue(int left, int top, int right, int bottom, int base);
-    void findImageEnergy(std::vector<std::vector<int>> &energyVector);
-    void findVCumulativeImageEnergy(std::vector<std::vector<int>> &energyVector, std::vector<std::vector<int>> &cumulativeEnergyVector);
+    pgmData data;
+
+    void quit(const int &code, const std::string &message);
+
+    int smallestOfThree(const int &x, const int &y, const int &z);
+
+    int **allocateDynamic2DArray(const int &n, const int &m);
+
+    int **transposeMatrix(const int &n, const int &m, int **arr);
+
+    int **readPGM(const std::string &fileName, pgmData &data);
+
+    void writePGM(const std::string &fileName, pgmData &data, int **arr);
+
+    void calculateEnergyMatrix(const int &n, const int &m, int **arr, int **newArr);
+
+    void removeVerticalSeam(const int &n, const int &m, int **imageArr, int **cEnergyArr);
+
+    void verticalCumulativeEnergyMatrix(const int &n, const int &m, int **arr, int **newArr);
+
+public:
+    ImageCarver();
+
+    int carve(int argc, char *argv[]);
 };
 
 #endif

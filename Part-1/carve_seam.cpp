@@ -7,9 +7,9 @@
 #include <iostream>
 #include <fstream>
 
-int main()
+int main(int argc, char *argv[])
 {
-    ImageCarver carverClass("bug.pgm");
-    carverClass.carve(1, 0);
-    carverClass.displayVector();
+    ImageCarver carverClass;
+    carverClass.carve(argc, argv);
+    return 0;
 }
