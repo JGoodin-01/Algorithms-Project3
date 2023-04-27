@@ -24,19 +24,32 @@ private:
 
     pgmData data;
 
-    int **create2DArray(const int &n, const int &m);
+    int **create2DArray(const int &numCols, const int &numRows);
 
-    int **transposeMatrix(const int &n, const int &m, int **arr);
+    int ***create2DColorArray(const int &numCols, const int &numRows);
+
+    int **transposeMatrix(const int &numCols, const int &numRows, int **arr);
+
+    int ***transposeColorMatrix(const int &numCols, const int &numRows, int ***arr);
 
     int **readPGM(const std::string &fileName, pgmData &data);
 
-    void writePGM(const std::string &fileName, pgmData &data, int **arr);
+    void writePGM(const string &fileName, pgmData &imageData, int **image);
 
-    void calculateEnergyMatrix(const int &n, const int &m, int **arr, int **newArr);
+    int ***readPPM(const string &fileName, pgmData &imageData);
 
-    void removeVerticalSeam(const int &n, const int &m, int **imageArr, int **cEnergyArr);
+    void writePPM(const string &fileName, pgmData &imageData, int ***image);
+
+    void calculateEnergyMatrix(const int &numCols, const int &numRows, int **imageMatrix, int **energyMatrix);
+
+    void removeVerticalSeam(const int &numCols, const int &numRows, int **imageMatrix, int **cEnergyMatrix);
 
     void vertCumulativeEnergy(const int &numCols, const int &numRows, int **energyMatrix, int **cEnergyMatrix);
+
+    // For PPM files - for color
+    void calculateEnergyMatrix(const int &numCols, const int &numRows, int ***imageMatrix, int **energyMatrix);
+
+    void removeVerticalSeam(const int &numCols, const int &numRows, int ***imageMatrix, int **cEnergyMatrix);
 
 public:
     ImageCarver();

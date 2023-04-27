@@ -102,6 +102,7 @@ int **ImageCarver::create2DArray(const int &numCols, const int &numRows)
 // Transposes a 2D array
 int **ImageCarver::transposeMatrix(const int &numCols, const int &numRows, int **arr)
 {
+    // This flips the Rows & Cols. Dont get confused by the parameters
     int **newArr = create2DArray(numRows, numCols);
 
     for (auto i = 0; i < numCols; ++i)
