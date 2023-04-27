@@ -17,7 +17,9 @@ add_executable(carve_seam)
 
 target_sources(carve_seam PRIVATE carve_seam.cpp ImageCarver.cpp)
 
+configure_file(Buchtel.pgm Buchtel.pgm COPYONLY)
 configure_file(bug.pgm bug.pgm COPYONLY)
+configure_file(color.ppm color.ppm COPYONLY)
 
 add_custom_target(run
         COMMENT "Run demo"

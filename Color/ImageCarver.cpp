@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <math.h>
 
 using std::cin;
 using std::cout;
@@ -518,7 +519,7 @@ void ImageCarver::calculateEnergyMatrix(const int &numCols, const int &numRows, 
                 }
 
                 // Equation to determine the average energy of a pixel from the pixels around it
-                colorEnergy += pow(abs(value - above) + abs(value - below) + abs(value - left) + abs(value - right), 2);
+                colorEnergy += std::pow(abs(value - above) + abs(value - below) + abs(value - left) + abs(value - right), 2);
             }
             energyMatrix[i][j] = colorEnergy;
         }

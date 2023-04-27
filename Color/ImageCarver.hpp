@@ -34,11 +34,11 @@ private:
 
     int **readPGM(const std::string &fileName, pgmData &data);
 
-    void writePGM(const string &fileName, pgmData &imageData, int **image);
+    void writePGM(const std::string &fileName, pgmData &imageData, int **image);
 
-    int ***readPPM(const string &fileName, pgmData &imageData);
+    int ***readPPM(const std::string &fileName, pgmData &imageData);
 
-    void writePPM(const string &fileName, pgmData &imageData, int ***image);
+    void writePPM(const std::string &fileName, pgmData &imageData, int ***image);
 
     void calculateEnergyMatrix(const int &numCols, const int &numRows, int **imageMatrix, int **energyMatrix);
 
