@@ -124,8 +124,8 @@ int ImageCarver::carve(int argc, char *argv[])
         pgmValues = this->transposeColorMatrix(imageData.rows, imageData.columns, transposedPPM);
 
         // Create new image
-        string newFileName = string(argv[1]).substr(0, string(argv[1]).find(".pgm"));
-        newFileName += "_processed_" + string(argv[2]) + "_" + string(argv[3]) + ".pgm";
+        string newFileName = string(argv[1]).substr(0, string(argv[1]).find(".ppm"));
+        newFileName += "_processed_" + string(argv[2]) + "_" + string(argv[3]) + ".ppm";
         this->writePPM(newFileName, imageData, pgmValues);
         cout << "\nNew image generated" << endl;
     }
